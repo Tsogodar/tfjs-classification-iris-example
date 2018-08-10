@@ -89,7 +89,6 @@ class Classification {
 
   prepareResult(final) {
     final.forEach(result => {
-      console.log('dupa')
       console.log(result.map(value=>Math.round(value)))
     })
   }
