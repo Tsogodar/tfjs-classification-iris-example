@@ -81,8 +81,8 @@ class Classification {
   testModel(test, model) {
     const result = model.predict(test)
     const finalResult = []
-    for (let i = 0; i < Array.from(result.dataSync()).length; i += 3) {
-      finalResult.push(Array.from(result.dataSync()).slice(i, i + 3))
+    for (let i = 0; i < Array.from(result.dataSync()).length; i += this.outputShapeNumber) {
+      finalResult.push(Array.from(result.dataSync()).slice(i, i + this.outputShapeNumber))
     }
     this.prepareResult(finalResult)
   }
