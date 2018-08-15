@@ -71,17 +71,16 @@ class Classification {
     this.trainModel(input, output, model)
   }
 
-   trainModel(input, output, model) {
-     model.fit(input, output, {
+   async trainModel(input, output, model) {
+     await model.fit(input, output, {
       epochs: 100,
       callbacks:{
         onEpochEnd: async (epoch, logs)=>{
           console.log(`${epoch+1}. ${logs.loss}`)
         }
       }
-    }).then(error => {
-      this.testModel(this.test, model)
     })
+      this.testModel(this.test, model);
   }
 
   testModel(test, model) {
