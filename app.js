@@ -1,6 +1,7 @@
 class Classification {
   constructor(trainFilename, testFilename) {
     this.tf = require('@tensorflow/tfjs');
+    require('@tensorflow/tfjs-node');
     let fs = require('fs')
     let path = require('path')
     let trainFile = fs.readFileSync(path.join(__dirname, trainFilename), 'utf8')
@@ -70,9 +71,14 @@ class Classification {
     this.trainModel(input, output, model)
   }
 
-  trainModel(input, output, model) {
-    model.fit(input, output, {
-      epochs: 100
+   trainModel(input, output, model) {
+     model.fit(input, output, {
+      epochs: 100,
+      callbacks:{
+        onEpochEnd: async (epoch, logs)=>{
+          console.log(`${epoch+1}. ${logs.loss}`)
+        }
+      }
     }).then(error => {
       this.testModel(this.test, model)
     })
@@ -94,6 +100,4 @@ class Classification {
   }
 }
 
-console.time('Done in ')
 new Classification('TrainSet.txt', 'TestSet.txt')
-console.timeEnd('Done in ')
