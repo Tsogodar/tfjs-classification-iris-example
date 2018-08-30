@@ -1,7 +1,7 @@
 class Classification {
   constructor(trainFilename, testFilename) {
     this.tf = require('@tensorflow/tfjs');
-    require('@tensorflow/tfjs-node');
+    require('@tensorflow/tfjs-node'); 
     let fs = require('fs')
     let path = require('path')
     let trainFile = fs.readFileSync(path.join(__dirname, trainFilename), 'utf8')
@@ -13,22 +13,24 @@ class Classification {
   prepareTrainingSet(trainFile) {
     const inputValues = []
     const outputValues = []
-    const dataOfArray = trainFile.split('\n')
+    const dataOfArray = trainFile.split('\r\n')
+    console.log(dataOfArray)
     dataOfArray.forEach(row => {
       const arrayRow = row.split(',')
       const out = arrayRow.pop()
       switch (out) {
         case 'Iris-setosa':
-          outputValues.push([0, 0, 1])
-          break
+        outputValues.push([0, 0, 1])
+        break
         case 'Iris-versicolor':
-          outputValues.push([0, 1, 0])
-          break
+        outputValues.push([0, 1, 0])
+        break
         case 'Iris-virginica':
-          outputValues.push([1, 0, 0])
-          break
+        outputValues.push([1, 0, 0])
+        break
       }
       inputValues.push(arrayRow.map(el => Number(el)))
+      console.log(this.inputShapeNumber)
       this.inputShapeNumber = inputValues[0].length
       this.outputShapeNumber = outputValues[0].length
     });
